@@ -5,8 +5,9 @@ import ArrowBack from "@mui/icons-material/ArrowBack";
 import ScoreCard from "~/components/AnimeScoreCard";
 import { getAnimeDetail } from "~/api/anime";
 import { Suspense } from "react";
-
 import AnimeDetailSkeleton from "~/components/AnimeDetailSkeleton";
+import ErrorFallback from "~/components/ErrorFallback";
+
 export async function loader({ params }: Route.LoaderArgs) {
   const animeDetail = getAnimeDetail(params.id);
   return { animeDetail };
@@ -28,7 +29,10 @@ export default function AnimeDetail({ loaderData }: Route.ComponentProps) {
   return (
     <main className="max-w-6xl mx-auto px-4 py-8">
       <Suspense fallback={<AnimeDetailSkeleton />}>
-        <Await resolve={animeDetail}>
+        <Await
+          resolve={animeDetail}
+          errorElement={<ErrorFallback onRetry={() => navigate(-1)} />}
+        >
           {({ data }) => (
             <>
               <div className="flex gap-8 flex-col sm:flex-row">

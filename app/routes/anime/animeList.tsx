@@ -5,6 +5,7 @@ import { TablePagination } from "@mui/material";
 import { getAnimeList } from "~/api/anime";
 import { Suspense } from "react";
 import AnimeListSkeleton from "~/components/AnimeListSkeleton";
+import ErrorFallback from "~/components/ErrorFallback";
 
 export async function loader({ request }: Route.LoaderArgs) {
   const url = new URL(request.url);
@@ -48,7 +49,10 @@ export default function AnimeList({ loaderData }: Route.ComponentProps) {
 
   return (
     <Suspense fallback={<AnimeListSkeleton />}>
-      <Await resolve={animeList}>
+      <Await
+        resolve={animeList}
+        errorElement={<ErrorFallback onRetry={() => navigate("/")} />}
+      >
         {({ data, pagination }) => (
           <>
             {data.length > 0 ? (

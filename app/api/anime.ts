@@ -1,4 +1,8 @@
-import type { AnimeDetailResponse, AnimeListResponse } from "types/anime";
+import type {
+  AnimeApiError,
+  AnimeDetailResponse,
+  AnimeListResponse,
+} from "types/anime";
 
 const BASE_URL = "https://api.jikan.moe/v4/anime";
 
@@ -19,6 +23,15 @@ const constructUrl = (
   return url;
 };
 
+const sanitizeAnimeApiError = (animeApiError: AnimeApiError) => {
+  return (
+    animeApiError.message ??
+    (animeApiError.messages &&
+      Object.values(animeApiError.messages).flat().join(", ")) ??
+    animeApiError.error
+  );
+};
+
 export const getAnimeList = async ({
   q,
   page = "1",
@@ -35,6 +48,10 @@ export const getAnimeList = async ({
   });
   const response = await fetch(url);
   const animeListData: AnimeListResponse = await response.json();
+
+  if ("error" in animeListData) {
+    throw new Error(sanitizeAnimeApiError(animeListData));
+  }
   return animeListData;
 };
 
@@ -42,5 +59,9 @@ export const getAnimeDetail = async (id: string) => {
   const url = constructUrl(`${BASE_URL}/${id}`);
   const response = await fetch(url);
   const animeDetailData: AnimeDetailResponse = await response.json();
+
+  if ("error" in animeDetailData) {
+    throw new Error(sanitizeAnimeApiError(animeDetailData));
+  }
   return animeDetailData;
 };

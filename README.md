@@ -27,6 +27,12 @@ yarn dev
 
 Your application will be available at `http://localhost:5173`.
 
+## Example screenshots
+
+![Main list](screenshots/main-list.png)
+![Search anime](screenshots/main-list-w-search.png)
+![Detail page](screenshots/detail-page.png)
+
 ---
 
 Built with ❤️ using React Router.

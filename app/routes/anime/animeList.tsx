@@ -51,31 +51,37 @@ export default function AnimeList({ loaderData }: Route.ComponentProps) {
       <Await resolve={animeList}>
         {({ data, pagination }) => (
           <>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mt-4 mb-4">
-              {data.map((anime) => (
-                <div
-                  key={anime.mal_id}
-                  className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg  hover:scale-105 transition-transform duration-300"
-                >
-                  <Link
-                    to={`/anime/${anime.mal_id}`}
-                    state={{
-                      title: anime.title,
-                    }}
-                    prefetch="intent"
+            {data.length > 0 ? (
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mt-4 mb-4">
+                {data.map((anime) => (
+                  <div
+                    key={anime.mal_id}
+                    className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg  hover:scale-105 transition-transform duration-300"
                   >
-                    <img
-                      src={anime.images.webp.image_url}
-                      alt={anime.title}
-                      className="w-full aspect-[3/4] object-cover"
-                    />
-                    <h4 className="px-4 py-2 text-lg font-semibold line-clamp-3 text-ellipsis">
-                      {anime.title}
-                    </h4>
-                  </Link>
-                </div>
-              ))}
-            </div>
+                    <Link
+                      to={`/anime/${anime.mal_id}`}
+                      state={{
+                        title: anime.title,
+                      }}
+                      prefetch="intent"
+                    >
+                      <img
+                        src={anime.images.webp.image_url}
+                        alt={anime.title}
+                        className="w-full aspect-[3/4] object-cover"
+                      />
+                      <h4 className="px-4 py-2 text-lg font-semibold line-clamp-3 text-ellipsis">
+                        {anime.title}
+                      </h4>
+                    </Link>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center h-[35vh] pt-16 text-lg italic text-gray-500">
+                No results found
+              </div>
+            )}
             <TablePagination
               component="div"
               color="primary"

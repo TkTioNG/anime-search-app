@@ -15,7 +15,7 @@ export async function loader({ params }: Route.LoaderArgs) {
 
 export function meta({ location }: Route.MetaArgs) {
   const state = location.state as { title: string };
-  return [{ title: state.title }];
+  return [{ title: state.title ?? "Anime Detail" }];
 }
 
 export default function AnimeDetail({ loaderData }: Route.ComponentProps) {

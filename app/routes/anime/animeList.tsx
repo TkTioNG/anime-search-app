@@ -74,7 +74,7 @@ export default function AnimeList({ loaderData }: Route.ComponentProps) {
                         alt={anime.title}
                         className="w-full aspect-[3/4] object-cover"
                       />
-                      <h4 className="px-4 py-2 text-lg font-semibold line-clamp-3 text-ellipsis">
+                      <h4 className="mx-4 my-2 text-lg font-semibold line-clamp-2 text-ellipsis">
                         {anime.title}
                       </h4>
                     </Link>

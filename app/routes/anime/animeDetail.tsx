@@ -46,7 +46,7 @@ export default function AnimeDetail({ loaderData }: Route.ComponentProps) {
                 <div className="flex-1">
                   <h2 className="text-4xl font-bold">{data.title}</h2>
                   <p className="text-lg mt-4">{data.synopsis}</p>
-                  <div className="flex flex-wrap gap-4 mt-16">
+                  <div className="flex flex-wrap justify-center gap-4 mt-8 sm:justify-start sm:mt-16">
                     <ScoreCard
                       title={`${data.score}`}
                       desc={`${data.scored_by} USERS`}
